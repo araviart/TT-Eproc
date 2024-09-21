@@ -2,11 +2,16 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import Navbar from "@/components/Navbar";
 
 const nuckleRegular = localFont({
   src: "./fonts/Nuckle-Regular.woff",
-  variable: "--font-geist-sans",
   weight: "100 900",
+});
+
+const nuckleMedium = localFont({
+  src: "./fonts/Nuckle-Medium.woff",
+  weight: "700",
 });
 
 export const metadata: Metadata = {
@@ -28,7 +33,8 @@ export default function RootLayout({
         )}
       >
         <main className="relative flex flex-col min-h-screen">
-          <div className="flex-grow flex-1">{children}</div>
+          <Navbar />
+          <div className={cn("flex-grow flex-1", nuckleMedium)}>{children}</div>
         </main>
       </body>
     </html>
