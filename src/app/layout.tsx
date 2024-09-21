@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+import Navbar from "@/components/Navbar";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
+const nuckleRegular = localFont({
+  src: "./fonts/Nuckle-Regular.woff",
   weight: "100 900",
 });
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+
+const nuckleMedium = localFont({
+  src: "./fonts/Nuckle-Medium.woff",
+  weight: "700",
 });
 
 export const metadata: Metadata = {
@@ -24,11 +25,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="h-full">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={cn(
+          "relative h-full font-sans antialiased",
+          nuckleRegular.className
+        )}
       >
-        {children}
+        <main className="relative flex flex-col min-h-screen">
+          <Navbar />
+          <div className={cn("flex-grow flex-1", nuckleMedium)}>{children}</div>
+        </main>
       </body>
     </html>
   );
