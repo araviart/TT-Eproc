@@ -1,4 +1,5 @@
-import { LucideProps, Search, UserRound, ShoppingCart } from "lucide-react";
+import { menu } from "framer-motion/client";
+import { LucideProps, Search, UserRound, ShoppingCart, Menu, X } from "lucide-react";
 
 export const Icons = {
   logo: (props: LucideProps ) => (
@@ -291,4 +292,6 @@ z"/>
   search: Search,
   userRound: UserRound,
   shoppingCart: ShoppingCart,
+	menu: Menu,
+	closeMenu: X,
 }
