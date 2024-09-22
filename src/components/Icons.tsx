@@ -1,5 +1,5 @@
 import { menu } from "framer-motion/client";
-import { LucideProps, Search, UserRound, ShoppingCart, Menu, X } from "lucide-react";
+import { LucideProps, Search, UserRound, ShoppingCart, Menu, X, LogOut, Settings, Pencil } from "lucide-react";
 
 export const Icons = {
   logo: (props: LucideProps ) => (
@@ -294,4 +294,7 @@ z"/>
   shoppingCart: ShoppingCart,
 	menu: Menu,
 	closeMenu: X,
+	logout: LogOut,
+	settings: Settings,
+	pencil: Pencil,
 }
