@@ -2,9 +2,12 @@ import React from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import AdminTable from './AdminTable';
 import { AdminCardProps } from '@/types/AdminCardProps';
+import TablePlaceholder from './TablePlaceHolder';
+import { Skeleton } from './ui/skeleton';
 
 const AdminCard: React.FC<AdminCardProps> = ({ selectedTab, items, loading, error, addItem, editItem, removeItem }) => {
   const columns = items.length > 0 ? Object.keys(items[0]) : [];
+  console.log(columns);
   return (
     <Card>
       <CardHeader>
@@ -12,21 +15,27 @@ const AdminCard: React.FC<AdminCardProps> = ({ selectedTab, items, loading, erro
       </CardHeader>
       <CardContent>
         {loading ? (
-          <div>Loading... (afficher skeleton)</div>
+          <TablePlaceholder />
         ) : error ? (
           <div>Error: {error.message}</div>
         ) : (
           <AdminTable
-          items={items}
-          columns={columns}
-          editItem={(id) => editItem(id, {})} // passe un objet vide pour data par défaut
-          removeItem={removeItem}
-        />
+            items={items}
+            columns={columns}
+            editItem={(id) => editItem(id, {})} // passe un objet vide pour data par défaut
+            removeItem={removeItem}
+          />
         )}
       </CardContent>
       <CardFooter>
-        <div className="text-xs">
-          Affiche <strong>{items.length}</strong> {selectedTab}
+      <div className="text-xs">
+          {loading ? (
+            <Skeleton className="w-16 h-3" /> 
+          ) : (
+            <>
+              Affiche <strong>{items.length}</strong> {selectedTab}
+            </>
+          )}
         </div>
       </CardFooter>
     </Card>
