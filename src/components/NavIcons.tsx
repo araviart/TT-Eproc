@@ -29,7 +29,7 @@ const NavIcons = () => {
             <Pencil className="h-4 w-4 mr-2" /><Link href="#">Profil</Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Settings className="h-4 w-4 mr-2" /><Link href="/admin">Administrer</Link>
+            <Settings className="h-4 w-4 mr-2" /><Link href="/admin/produits">Administrer</Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem>

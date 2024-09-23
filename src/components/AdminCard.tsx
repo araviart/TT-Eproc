@@ -1,22 +1,32 @@
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import AdminTable from "@/components/AdminTable";
+import React from 'react';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import AdminTable from './AdminTable';
+import { AdminCardProps } from '@/types/AdminCardProps';
 
-const AdminCard = () => {
+const AdminCard: React.FC<AdminCardProps> = ({ selectedTab, items, loading, error, addItem, editItem, removeItem }) => {
+  const columns = items.length > 0 ? Object.keys(items[0]) : [];
   return (
-    <Card x-chunk="dashboard-06-chunk-0">
+    <Card>
       <CardHeader>
-        <CardTitle>Produits</CardTitle>
-        <CardDescription>
-          Gérez vos produits et catégories
-        </CardDescription>
+        <CardTitle>{selectedTab.charAt(0).toUpperCase() + selectedTab.slice(1)}</CardTitle>
       </CardHeader>
       <CardContent>
-        <AdminTable />
+        {loading ? (
+          <div>Loading... (afficher skeleton)</div>
+        ) : error ? (
+          <div>Error: {error.message}</div>
+        ) : (
+          <AdminTable
+          items={items}
+          columns={columns}
+          editItem={(id) => editItem(id, {})} // passe un objet vide pour data par défaut
+          removeItem={removeItem}
+        />
+        )}
       </CardContent>
       <CardFooter>
-        <div className="text-xs text-muted-foreground">
-          {/* faire pagination */}
-          Showing <strong>1-10</strong> of <strong>32</strong> products
+        <div className="text-xs">
+          Affiche <strong>{items.length}</strong> {selectedTab}
         </div>
       </CardFooter>
     </Card>

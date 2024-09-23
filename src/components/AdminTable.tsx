@@ -1,70 +1,69 @@
-// components/AdminTable.tsx
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { MoreHorizontal } from "lucide-react";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { MoreHorizontal } from 'lucide-react';
 
-const AdminTable = () => {
+interface AdminTableProps {
+  items: any[];  // les données du tableau, qui peuvent être des produits, des catégories (modulable)
+  columns: string[];  // liste des colonnes à afficher 
+  editItem: (id: string) => void;  // fonction edit un élément
+  removeItem: (id: string) => void;  // fonction delete un élément
+}
+
+// fonction utilitaire pour générer les classes CSS conditionnelles pour les colonnes
+const getNumberColumns = (index: number) => {
+  if (index > 2) return 'hidden lg:table-cell';
+  if (index > 1) return 'hidden md:table-cell';
+  if (index > 0) return 'hidden sm:table-cell';
+  return '';
+};
+
+// fonction utilitaire pour faire le rendu des cellules du tableau
+const renderTableCells = (item: any, columns: string[]) => {
+  return columns.map((col, i) => (
+    <TableCell key={i} className={getNumberColumns(i)}>
+      {item[col]}
+    </TableCell>
+  ));
+};
+
+const AdminTable: React.FC<AdminTableProps> = ({ items, columns, editItem, removeItem }) => {
   return (
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead className="hidden w-[100px] sm:table-cell">
-            <span className="sr-only">Image</span>
-          </TableHead>
-          <TableHead>Nom</TableHead>
-          <TableHead className="hidden md:table-cell">Price</TableHead>
-          <TableHead className="hidden md:table-cell">Description</TableHead>
-          <TableHead className="hidden md:table-cell">Catégorie</TableHead>
+          {columns.map((col, index) => (
+            <TableHead className={getNumberColumns(index)} key={index}>
+              {col.charAt(0).toUpperCase() + col.slice(1)}
+            </TableHead>
+          ))}
           <TableHead>
             <span className="sr-only">Actions</span>
           </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        <TableRow>
-          <TableCell className="hidden sm:table-cell">
-            <Image
-              alt="Product image"
-              className="aspect-square rounded-md object-cover"
-              height="64"
-              src="/placeholder.svg"
-              width="64"
-            />
-          </TableCell>
-          <TableCell className="font-medium">
-            Laser Lemonade Machine
-          </TableCell>
-          <TableCell className="hidden md:table-cell">
-            $499.99
-          </TableCell>
-          <TableCell className="hidden md:table-cell">
-            25
-          </TableCell>
-          <TableCell className="hidden md:table-cell">
-            2023-07-12 10:42 AM
-          </TableCell>
-          <TableCell>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  aria-haspopup="true"
-                  size="icon"
-                  variant="ghost"
-                >
-                  <MoreHorizontal className="h-4 w-4" />
-                  <span className="sr-only">Toggle menu</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuItem>Modifier</DropdownMenuItem>
-                <DropdownMenuItem>Supprimer</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </TableCell>
-        </TableRow>
+        {items.map((item, index) => (
+          <TableRow key={index}>
+            {renderTableCells(item, columns)}
+            <TableCell>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button aria-haspopup="true" size="icon" variant="ghost">
+                    <MoreHorizontal className="h-4 w-4" />
+                    <span className="sr-only">Toggle menu</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                  <DropdownMenuItem onClick={() => editItem(item.id)}>Edit</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => removeItem(item.id)}>Delete</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </TableCell>
+          </TableRow>
+        ))}
       </TableBody>
     </Table>
   );
