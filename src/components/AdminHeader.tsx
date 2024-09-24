@@ -1,3 +1,4 @@
+import { useState } from "react"; // Importer useState
 import Link from "next/link";
 import {
   Home,
@@ -36,10 +37,30 @@ import { CategoryForm } from "./forms/categoryForm";
 import { Product } from "@/types/Product";
 import { Category } from "@/types/Category";
 
-const AdminHeader: React.FC<Pick<AdminCardProps, "selectedTab"> & { onAddClick: (data: Product | Category) => void }> = ({
-  selectedTab,
-  onAddClick,
-}) => {
+const AdminHeader: React.FC<
+  Pick<AdminCardProps, "selectedTab"> & {
+    onAddClick: (data: Product | Category) => void;
+  }
+> = ({ selectedTab, onAddClick }) => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false); // État pour contrôler l'ouverture du formulaire
+  const [currentItem, setCurrentItem] = useState<Product | Category | null>(
+    null
+  ); 
+
+  const handleAddClick = () => {
+    setCurrentItem(null);
+    setIsDialogOpen(true); 
+  };
+
+  const handleFormClose = () => {
+    setIsDialogOpen(false); 
+  };
+
+  const handleFormSubmit = (data: Product | Category) => {
+    onAddClick(data); 
+    setIsDialogOpen(false); 
+  };
+
   return (
     <header className="sticky top-0 z-30 flex flex-col gap-4 border-b bg-background px-4 sm:static sm:border-0 sm:bg-transparent sm:px-6">
       <div className="flex h-14 items-center gap-4">
@@ -58,41 +79,6 @@ const AdminHeader: React.FC<Pick<AdminCardProps, "selectedTab"> & { onAddClick: 
               >
                 <Package2 className="h-5 w-5 transition-all group-hover:scale-110" />
                 <span className="sr-only">Acme Inc</span>
-              </Link>
-              <Link
-                href="#"
-                className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-              >
-                <Home className="h-5 w-5" />
-                Dashboard
-              </Link>
-              <Link
-                href="#"
-                className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-              >
-                <ShoppingCart className="h-5 w-5" />
-                Orders
-              </Link>
-              <Link
-                href="#"
-                className="flex items-center gap-4 px-2.5 text-foreground"
-              >
-                <Package className="h-5 w-5" />
-                Products
-              </Link>
-              <Link
-                href="#"
-                className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-              >
-                <Users2 className="h-5 w-5" />
-                Customers
-              </Link>
-              <Link
-                href="#"
-                className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-              >
-                <LineChart className="h-5 w-5" />
-                Settings
               </Link>
             </nav>
           </SheetContent>
@@ -122,13 +108,39 @@ const AdminHeader: React.FC<Pick<AdminCardProps, "selectedTab"> & { onAddClick: 
         </div>
       </div>
       <div className="flex gap-2 pb-2">
-        {selectedTab === "produits" ? (
-          <ProductForm onSubmit={onAddClick} />
-        ) : selectedTab === "categories" ? (
-          <CategoryForm onSubmit={onAddClick} />
-        ) : (
-          <p>Aucun formulaire disponible pour cet onglet.</p>
+        <Button
+          variant="customForm"
+          size="sm"
+          className="h-8 gap-1"
+          onClick={handleAddClick}
+        >
+          <PlusCircle className="h-4 w-4" />
+          {selectedTab === "produits"
+            ? "Ajouter un produit"
+            : "Ajouter une catégorie"}
+        </Button>
+
+        {/* Formulaire pour ajouter un produit */}
+        {selectedTab === "produits" && (
+          <ProductForm
+            isOpen={isDialogOpen}
+            onClose={handleFormClose}
+            onSubmit={handleFormSubmit}
+            defaultValues={currentItem || {}}
+          />
         )}
+
+        {/* Formulaire pour ajouter une catégorie */}
+        {selectedTab === "categories" && (
+          <CategoryForm
+            isOpen={isDialogOpen}
+            onClose={handleFormClose}
+            onSubmit={handleFormSubmit}
+            defaultValues={currentItem || {}}
+          />
+        )}
+
+        {/* Menu de filtrage */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="sm" className="h-8 gap-1">
@@ -141,10 +153,13 @@ const AdminHeader: React.FC<Pick<AdminCardProps, "selectedTab"> & { onAddClick: 
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Filtrer</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuCheckboxItem checked>Cate 1</DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem>Cate 2</DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem>Cate 3</DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem>Cate 4</DropdownMenuCheckboxItem>
+            {/* Options de filtrage */}
+            <DropdownMenuCheckboxItem checked>
+              Catégorie 1
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem>Catégorie 2</DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem>Catégorie 3</DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem>Catégorie 4</DropdownMenuCheckboxItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

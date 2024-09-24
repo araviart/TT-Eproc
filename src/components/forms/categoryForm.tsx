@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Dialog,
-  DialogTrigger,
   DialogContent,
   DialogHeader,
   DialogFooter,
@@ -20,40 +19,46 @@ import {
 } from "../ui/form";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { categorySchema } from "./categorySchema";
 
-const categorySchema = z.object({
-  name: z.string().min(1, "Le nom de la catégorie est requis"),
-  products: z.array(z.string()).optional(),
-});
-
-type CategoryFormValues = z.infer<typeof categorySchema>;
+export type CategoryFormValues = z.infer<typeof categorySchema>;
 
 export function CategoryForm({
   onSubmit,
   defaultValues = {
+    id: 0,
     name: "",
     products: [],
   },
+  isOpen,
+  onClose,
 }: {
   onSubmit: (data: CategoryFormValues) => void;
   defaultValues?: CategoryFormValues;
+  isOpen: boolean;
+  onClose: () => void;
 }) {
   const form = useForm<CategoryFormValues>({
     resolver: zodResolver(categorySchema),
     defaultValues,
   });
 
+  const handleSubmit = async (data: CategoryFormValues) => {
+    const isValid = await form.trigger();
+    if (isValid) {
+      onSubmit(data);
+      onClose();
+    }
+  };
+
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="customForm" size="sm" className="h-8 gap-1">Ajouter une catégorie</Button>
-      </DialogTrigger>
+    <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent aria-describedby="category-form">
         <DialogHeader>
           <DialogTitle>Ajoutez ou modifiez une catégorie</DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
             <FormField
               control={form.control}
               name="name"
@@ -67,15 +72,14 @@ export function CategoryForm({
                 </FormItem>
               )}
             />
-            {/* TODO : ajoutez liste de produits */}
             <DialogFooter>
-            <DialogClose asChild>
-                <Button variant="customForm" type="submit">
-                  Enregistrer
-                </Button>
-              </DialogClose>
+              <Button variant="customForm" type="submit">
+                Enregistrer
+              </Button>
               <DialogClose asChild>
-                <Button type="button" variant="ghost">Annuler</Button>
+                <Button type="button" variant="ghost">
+                  Annuler
+                </Button>
               </DialogClose>
             </DialogFooter>
           </form>

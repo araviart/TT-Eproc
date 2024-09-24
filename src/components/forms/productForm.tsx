@@ -1,5 +1,3 @@
-"use client";
-
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -7,7 +5,6 @@ import { productSchema } from "./productSchema";
 import { useCategories } from "@/hooks/useCategory";
 import {
   Dialog,
-  DialogTrigger,
   DialogContent,
   DialogHeader,
   DialogFooter,
@@ -26,9 +23,9 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { MultiSelect } from "@/components/multi-select"; // Importation du composant MultiSelect
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-type ProductFormValues = z.infer<typeof productSchema>;
+export type ProductFormValues = z.infer<typeof productSchema>;
 
 export function ProductForm({
   onSubmit,
@@ -37,55 +34,63 @@ export function ProductForm({
     description: "",
     price: 0,
     image: "",
-    category: [""], // default array for multiple categories
+    category: [],
   },
+  isOpen,
+  onClose,
 }: {
   onSubmit: (data: ProductFormValues) => void;
   defaultValues?: ProductFormValues;
+  isOpen: boolean;
+  onClose: () => void;
 }) {
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productSchema),
     defaultValues,
   });
-
-  const { categories, loading } = useCategories(); // Utiliser le hook pour récupérer les catégories
+  const { categories, loading } = useCategories();
   const [selectedCategories, setSelectedCategories] = useState<string[]>(
     defaultValues.category
   );
 
   const handleCategoryChange = (selected: string[]) => {
+    console.log("Selected categories productForm:", selected);
     const formattedCategories = selected
       .filter((id) => id !== undefined)
       .map((id) => `/categories/${id}`);
     setSelectedCategories(formattedCategories);
+    form.setValue("category", formattedCategories);
   };
 
+  const handleSubmit = async (data: ProductFormValues) => {
+    const isValid = await form.trigger();
+    if (isValid) {
+      onSubmit({
+        ...data,
+        category: selectedCategories,
+      });
+      onClose();
+    }
+  };
+
+  useEffect(() => {
+    if (defaultValues) {
+      form.reset(defaultValues);
+      setSelectedCategories(defaultValues.category);
+    }
+  }, [defaultValues, form]);
+
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="customForm" size="sm" className="h-8 gap-1">
-          Ajouter un produit
-        </Button>
-      </DialogTrigger>
+    <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Ajoutez ou modifiez un produit</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(
-              (data) => {
-                console.log("Form Data:", data);
-                console.log("Selected Categories:", selectedCategories);
-                onSubmit({
-                  ...data,
-                  category: selectedCategories, // Ne pas ajouter de chaîne vide ici, le schéma de validation gérera ça
-                });
-              },
-              (e) => {
-                console.log("Form Errors:", e);
-              }
-            )}
+            onSubmit={form.handleSubmit(handleSubmit, (errors) => {
+              console.log("Form validation errors:", errors);
+            })}
             className="space-y-4"
           >
             <FormField
@@ -134,12 +139,7 @@ export function ProductForm({
                 <FormItem>
                   <FormLabel>Prix</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Prix"
-                      type="number"
-                      {...field}
-                      onChange={(e) => field.onChange(Number(e.target.value))}
-                    />
+                    <Input placeholder="Prix" type="number" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -159,12 +159,12 @@ export function ProductForm({
                           label: category.name,
                         }))}
                         onValueChange={handleCategoryChange}
-                        defaultValue={selectedCategories.map(
+                        defaultValue={selectedCategories?.map(
                           (cat) => cat.split("/").pop()!
                         )}
                         placeholder="Sélectionner des catégories"
                         variant="default"
-                        maxCount={5} // nb max d'elem avant de résumer
+                        maxCount={5}
                       />
                     )}
                   </FormControl>
@@ -174,11 +174,9 @@ export function ProductForm({
             />
 
             <DialogFooter>
-              <DialogClose asChild>
-                <Button variant="customForm" type="submit">
-                  Enregistrer
-                </Button>
-              </DialogClose>
+              <Button variant="customForm" type="submit">
+                Enregistrer
+              </Button>
               <DialogClose asChild>
                 <Button type="button" variant="ghost">
                   Annuler
