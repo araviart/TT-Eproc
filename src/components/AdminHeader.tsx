@@ -32,8 +32,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { ProductForm } from "./forms/productForm";
-import { CategoryForm } from "./forms/categoryForm";
+import { ProductForm, ProductFormValues } from "./forms/productForm";
+import { CategoryForm, CategoryFormValues } from "./forms/categoryForm";
 import { Product } from "@/types/Product";
 import { Category } from "@/types/Category";
 
@@ -53,12 +53,18 @@ const AdminHeader: React.FC<
   };
 
   const handleFormClose = () => {
-    setIsDialogOpen(false); 
-  };
+    setIsDialogOpen(false);
+  }
 
-  const handleFormSubmit = (data: Product | Category) => {
-    onAddClick(data); 
-    setIsDialogOpen(false); 
+  const handleCategoryFormSubmit = (data: CategoryFormValues) => {
+    onAddClick(data);
+    setIsDialogOpen(false);
+  };
+  
+  // Pour ProductForm
+  const handleProductFormSubmit = (data: ProductFormValues) => {
+    onAddClick(data);
+    setIsDialogOpen(false);
   };
 
   return (
@@ -122,24 +128,23 @@ const AdminHeader: React.FC<
 
         {/* Formulaire pour ajouter un produit */}
         {selectedTab === "produits" && (
-          <ProductForm
-            isOpen={isDialogOpen}
-            onClose={handleFormClose}
-            onSubmit={handleFormSubmit}
-            defaultValues={currentItem || {}}
-          />
-        )}
+  <ProductForm
+    isOpen={isDialogOpen}
+    onClose={handleFormClose}
+    onSubmit={handleProductFormSubmit}
+    defaultValues={currentItem ? (currentItem as ProductFormValues) : undefined}
 
-        {/* Formulaire pour ajouter une catégorie */}
-        {selectedTab === "categories" && (
-          <CategoryForm
-            isOpen={isDialogOpen}
-            onClose={handleFormClose}
-            onSubmit={handleFormSubmit}
-            defaultValues={currentItem || {}}
-          />
-        )}
+  />
+)}
 
+{selectedTab === "categories" && (
+  <CategoryForm
+    isOpen={isDialogOpen}
+    onClose={handleFormClose}
+    onSubmit={handleCategoryFormSubmit}
+    defaultValues={currentItem as CategoryFormValues}
+  />
+)}
         {/* Menu de filtrage */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
