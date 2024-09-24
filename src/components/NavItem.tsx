@@ -1,7 +1,8 @@
+// NavItem.tsx
 import { Button } from "./ui/button";
 import { PRODUCT_CATEGORIES } from "@/app/config";
-import { motion } from "framer-motion";
 import AnimatedItem from "./AnimatedItem";
+import Link from "next/link";
 
 type Category = (typeof PRODUCT_CATEGORIES)[number];
 
@@ -12,20 +13,19 @@ interface NavItemProps {
   isMenuOpen: boolean;
 }
 
+const NavItem = ({ category, isOpen, handleClick, isMenuOpen }: NavItemProps) => {
+  const href = category.value === "produits" ? "/" : `/products/${category.value}`;
 
-
-const NavItem = ({ category, isOpen, handleClick, isMenuOpen}: NavItemProps) => {
   return (
     <div className="flex">
       <div className="relative flex items-center">
-        <Button
-          className={`gap-4 font-semibold ${isMenuOpen ? 'text-4xl' : 'text-base'}`}
-          onClick={handleClick}
-        >
-          <AnimatedItem isOpen={isOpen}>
-            {category.label}
-          </AnimatedItem>
-        </Button>
+        <Link href={href}>
+          <Button
+            className={`gap-4 font-semibold ${isMenuOpen ? 'text-4xl' : 'text-base'}`}
+          >
+            <AnimatedItem isOpen={false}>{category.label}</AnimatedItem>
+          </Button>
+        </Link>
       </div>
     </div>
   );
