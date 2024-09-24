@@ -1,4 +1,3 @@
-// NavItem.tsx
 import { Button } from "./ui/button";
 import { PRODUCT_CATEGORIES } from "@/app/config";
 import AnimatedItem from "./AnimatedItem";
@@ -21,9 +20,10 @@ const NavItem = ({ category, isOpen, handleClick, isMenuOpen }: NavItemProps) =>
       <div className="relative flex items-center">
         <Link href={href}>
           <Button
-            className={`gap-4 font-semibold ${isMenuOpen ? 'text-4xl' : 'text-base'}`}
+            className={`gap-4 font-semibold ${isMenuOpen ? 'text-4xl' : 'text-base'} ${isOpen ? 'text-black' : ''}`}
+            onClick={handleClick}
           >
-            <AnimatedItem isOpen={false}>{category.label}</AnimatedItem>
+            <AnimatedItem isOpen={isOpen}>{category.label}</AnimatedItem>
           </Button>
         </Link>
       </div>

@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./globals.css";
+import "../globals.css";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/Navbar";
 
 const nuckleRegular = localFont({
-  src: "./fonts/Nuckle-Regular.woff",
+  src: "../fonts/Nuckle-Regular.woff",
   weight: "100 900",
 });
 
 const nuckleMedium = localFont({
-  src: "./fonts/Nuckle-Medium.woff",
+  src: "../fonts/Nuckle-Medium.woff",
   weight: "700",
 });
 
@@ -25,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full">
+    <html lang="fr" className="h-full">
       <body
         className={cn(
           "relative h-full font-sans antialiased",
