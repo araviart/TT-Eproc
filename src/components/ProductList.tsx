@@ -19,7 +19,7 @@ const ProductList = ({ selectedCategoryId }: ProductListProps) => {
   }
 
   return (
-    <section className="py-4">
+    <section className="py-4 mb-10 md:mb-20">
       <div className='relative'>
         <div className='mt-6 flex items-center w-full'>
           <div className="w-full grid grid-cols-2 gap-x-[46px] gap-y-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-x-6 md:gap-y-10 lg:gap-x-48">

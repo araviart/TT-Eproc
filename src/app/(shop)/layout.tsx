@@ -3,16 +3,8 @@ import localFont from "next/font/local";
 import "../globals.css";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/Navbar";
-
-const nuckleRegular = localFont({
-  src: "../fonts/Nuckle-Regular.woff",
-  weight: "100 900",
-});
-
-const nuckleMedium = localFont({
-  src: "../fonts/Nuckle-Medium.woff",
-  weight: "700",
-});
+import { Footer } from "@/components/Footer";
+import { nuckleRegular, nuckleMedium } from "../../lib/fonts";
 
 export const metadata: Metadata = {
   title: "DAVRILSUPPLY",
@@ -28,14 +20,15 @@ export default function RootLayout({
     <html lang="fr" className="h-full">
       <body
         className={cn(
-          "relative h-full font-sans antialiased",
-          nuckleRegular.className
+          "relative h-full antialiased",
+          nuckleRegular.className        
         )}
       >
         <main className="relative flex flex-col min-h-screen">
           <Navbar />
-          <div className={cn("flex-grow flex-1", nuckleMedium)}>{children}</div>
+          <div className={cn("flex-grow flex-1", nuckleMedium.className)}>{children}</div>
         </main>
+        <Footer />
       </body>
     </html>
   );

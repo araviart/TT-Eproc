@@ -7,6 +7,9 @@ import NavItems from "./NavItems";
 import NavIcons from "./NavIcons";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import { cn } from "@/lib/utils";
+import localFont from "next/font/local";
+import { nuckleMedium } from "@/lib/fonts";
 
 const Navbar = () => {
 
@@ -17,7 +20,7 @@ const Navbar = () => {
     setIsMenuOpen((prev) => !prev);
   };
   return (
-    <div className='bg-white sticky z-50 top-0 inset-x-0 h-16'>
+    <div className={cn('bg-white sticky z-50 top-0 inset-x-0 h-16', nuckleMedium.className)}>
       <header className='relative bg-white'>
         <div className='border-b border-slate-200'>
           <MaxWidthWrapper>
