@@ -9,6 +9,13 @@ import { CategoryForm } from './forms/categoryForm';
 import { Product } from '@/types/Product';
 import { Category } from '@/types/Category';
 
+const getNumberColumns = (index: number) => {
+  if (index > 2) return 'hidden lg:table-cell';
+  if (index > 1) return 'hidden md:table-cell';
+  if (index > 0) return 'hidden sm:table-cell';
+  return '';
+};
+
 interface AdminTableProps {
   items: any[];
   columns: string[];
@@ -26,32 +33,32 @@ const AdminTable: React.FC<AdminTableProps> = ({ items, columns, editItem, remov
   const [isCategoryFormOpen, setIsCategoryFormOpen] = useState(false);
 
   const handleEditClick = (item: any) => {
-    setCurrentItem(item); // Sélectionne l'élément à modifier
+    setCurrentItem(item); // sélectionne l'élément à modif
     if (selectedTab === 'produits') {
-      setIsProductFormOpen(true);  // Ouvre ProductForm
+      setIsProductFormOpen(true);  //ouvre ProductForm
     } else if (selectedTab === 'categories') {
-      setIsCategoryFormOpen(true);  // Ouvre CategoryForm
+      setIsCategoryFormOpen(true);  // ouvre CategoryForm
     }
   };
 
   const handleDelete = (id: string) => {
-    setSelectedItemId(id); // Définit l'élément sélectionné pour suppression
+    setSelectedItemId(id); // définit l'élément sélectionné pour suppression
   };
 
   const confirmDelete = () => {
     if (selectedItemId) {
-      removeItem(selectedItemId); // Supprime l'élément
-      setSelectedItemId(null); // Réinitialise l'état
+      removeItem(selectedItemId); // supprime l'élément
+      setSelectedItemId(null); // reset l'état
     }
   };
 
   const handleFormSubmit = async (data: any) => {
     if (currentItem) {
-      onEditClick({ ...data, id: currentItem.id });  // Modifie l'élément avec l'id
+      onEditClick({ ...data, id: currentItem.id });  // modifie l'élément avec l'id
     } else {
-      onAddClick(data);  // Ajoute un nouvel élément
+      onAddClick(data);  // ajoute un nouvel élément
     }
-    setIsProductFormOpen(false);  // Ferme le formulaire après soumission
+    setIsProductFormOpen(false);  // ferme le formulaire
     setIsCategoryFormOpen(false);
   };
 
@@ -61,7 +68,7 @@ const AdminTable: React.FC<AdminTableProps> = ({ items, columns, editItem, remov
         <TableHeader>
           <TableRow>
             {columns.map((col, index) => (
-              <TableHead key={index}>
+              <TableHead key={index} className={getNumberColumns(index)}>
                 {col.charAt(0).toUpperCase() + col.slice(1)}
               </TableHead>
             ))}
@@ -74,7 +81,9 @@ const AdminTable: React.FC<AdminTableProps> = ({ items, columns, editItem, remov
           {items.map((item, index) => (
             <TableRow key={index}>
               {columns.map((col, i) => (
-                <TableCell key={i}>{item[col]}</TableCell>
+                <TableCell key={i} className={getNumberColumns(i)}>
+                  {item[col]}
+                </TableCell>
               ))}
               <TableCell>
                 <DropdownMenu>

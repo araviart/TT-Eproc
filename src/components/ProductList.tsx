@@ -11,7 +11,7 @@ const ProductList = () => {
   if (products && products.length) {
     map = products;
   } else if (loading) {
-    map = new Array<null>(4).fill(null);
+    map = new Array<null>(8).fill(null);
   }
   
   return (

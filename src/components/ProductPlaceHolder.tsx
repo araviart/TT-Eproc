@@ -2,6 +2,7 @@ import React from "react";
 import { Skeleton } from "./ui/skeleton";
 
 const ProductPlaceholder = () => {
+  
   return (
     <div className="flex flex-col w-full">
         <div className="relative w-[170] h-[185px] md:w-[232px] md:h-[266px] lg:w-[258px] lg:h-[298px]">

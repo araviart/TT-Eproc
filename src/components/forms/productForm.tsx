@@ -25,6 +25,7 @@ import { Textarea } from "../ui/textarea";
 import { MultiSelect } from "@/components/multi-select"; // Importation du composant MultiSelect
 import { useState, useEffect } from "react";
 
+
 export type ProductFormValues = z.infer<typeof productSchema>;
 
 export function ProductForm({
@@ -70,6 +71,7 @@ export function ProductForm({
         category: selectedCategories,
       });
       onClose();
+      form.reset();
     }
   };
 
@@ -78,7 +80,7 @@ export function ProductForm({
       form.reset(defaultValues);
       setSelectedCategories(defaultValues.category);
     }
-  }, [defaultValues, form]);
+  }, []);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
