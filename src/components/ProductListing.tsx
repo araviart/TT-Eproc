@@ -30,18 +30,18 @@ const ProductListing = ({ product, index }: ProductListingProps) => {
       href={`/product/${product.id}`}
     >
       <div className="flex flex-col w-full">
-        <div className="relative w-[170] h-[185px] md:w-[232px] md:h-[266px] lg:w-[302px] lg:h-[358px]">
+        <div className="relative w-[170] h-[185px] md:w-[232px] md:h-[266px] lg:w-[258px] lg:h-[298px] mt-4">
           <img
             src={product.image}
             alt={product.name}
             className="w-full h-full object-cover rounded-xl"
           />
           <div className="flex w-full items-center justify-between">
-            <h3 className="mt-2 font-medium text-sm text-gray-700 rounded-2xl">
+            <h3 className="mt-3 font-medium text-sm text-gray-700 rounded-2xl">
               {product.name}
             </h3>
-            <h3 className="mt-2 font-medium text-sm text-gray-700 rounded-2xl">
-              {product.price}
+            <h3 className="mt-3 font-medium text-sm text-gray-700 rounded-2xl">
+              {product.price} €
             </h3>
           </div>
         </div>

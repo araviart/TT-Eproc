@@ -1,9 +1,8 @@
-import { Category } from "@/types/Category";
-
 export interface Product {
-  id: string;
+  id?: number;
   name: string;
   price: number;
-  category: Category;
-  image: string;
+  category: string[]; 
+  image?: string;
+  description?: string;
 }
