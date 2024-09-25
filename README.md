@@ -100,6 +100,8 @@ Ces fonctions sont utilisées dans des hooks personnalisés. Pour faciliter la g
 
 Par exemple, useProducts qui encapsule la logique pour récupérer et manipuler les données des produits, et useCategories pour les catégories.
 
+src/hooks/useProducts
+
 ```tsx
 import { useState, useEffect } from 'react';
 import { getCategories, createCategory, updateCategory, deleteCategory } from '../service/api';
@@ -127,6 +129,8 @@ export const useCategories = () => {
 ```
 
 ### Utilisation
+
+src/components/products/ProductList.tsx
 
 ```tsx
 import { useProducts } from '../hooks/useProducts'; // import hook personalisé
@@ -172,6 +176,8 @@ Contrôle des erreurs utilisateur : en renvoyant des messages d’erreurs person
 Assurance de l'intégrité des données : garantir que les données soumises respectent les contraintes du schéma.
 
 Par exemple pour le schéma d'un produit : 
+
+src/forms/productSchema.tsx
 
 ```tsx
 export const productSchema = z.object({
@@ -235,6 +241,8 @@ L’utilisateur doit toujours savoir ce qui se passe : si une action a été pri
 
 
 Par exemple, 
+
+src/components/products/ProductList.tsx
  
 ```tsx 
 import { Skeleton } from "@/components/ui/skeleton";
