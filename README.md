@@ -1,17 +1,36 @@
 # TEST TECHNIQUE EPROC-FACTORY
 
+https://github.com/user-attachments/assets/4f497896-4760-452f-8239-50ea9d2f42be
+
 ## Lancer le site
 
-First, lancer le serveur de développement:
+### Lancer l'API Platform 
 
-```bash
+Clonez l'API Platform  [API Platform](https://github.com/EprocFactory/technical-test_api-products/commits/main/)
+
+Modifier le fichier CaddyFile :
+
+```-{$SERVER_NAME:localhost} {``` - > ```http://{$SERVER_NAME:localhost} {```
+
+Modifier le fichier compose.yaml 
+
+```published: ${HTTP_PORT:-80}``` > ```published: 8080```
+
+
+### Lancer l'application NextJS
+
+Clonez le projet NextJS dans un repertoire différent de celui de l'API Platform.
+
+Au sein du projet, installer les dépendances, ouvrez un terminal dans le répertoire du projet et exécutez la commande suivante pour installer toutes les dépendances listées dans package.json :
+
+```
+npm install
+```
+
+Démarrer le serveur de développementn lancez le serveur de développement avec la commande suivante :
+
+```
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Ouvrir [http://localhost:3000](http://localhost:3000) avec le navigateur pour voir le résultat.
@@ -22,9 +41,9 @@ Ouvrir [http://localhost:3000](http://localhost:3000) avec le navigateur pour vo
 
 ## 1. Structure du projet
 
-Ce projet utilise NextJS + Typescript et TailwindCSS (ShadcnUI) et utilise une API REST Symfony : https://github.com/EprocFactory/technical-test_api-products/commits/main/
+Ce projet utilise NextJS + Typescript et TailwindCSS (ShadcnUI) et utilise une API REST Symfony : [API Platform](https://github.com/EprocFactory/technical-test_api-products/commits/main/)
 
-Le projet Next.js est organisé autour de routes groupées (shop) pour le côté boutique et (admin) pour le panneau d'administration ou se situe les fonctionnalitées CRUD. Cette organisation permet de ne pas impacter l'URL pour la partie boutique et de définir des layouts racine différents. Par exemple, nous ne souhaitons pas de footer lorsque nous naviguons sur le côté admin du site. https://nextjs.org/docs/app/building-your-application/routing/route-groups#creating-multiple-root-layouts
+Le projet Next.js est organisé autour de routes groupées (shop) pour le côté boutique et (admin) pour le panneau d'administration ou se situe les fonctionnalitées CRUD. Cette organisation permet de ne pas impacter l'URL pour la partie boutique et de définir des layouts racine différents. Par exemple, nous ne souhaitons pas de footer lorsque nous naviguons sur le côté admin du site. [Route Groups Doc](https://nextjs.org/docs/app/building-your-application/routing/route-groups#creating-multiple-root-layouts)
 
 Définir un layout racine et ne pas utiliser le groupage de roroutes ot m'aurait dirigé vers des layouts imbriqués peu-pratique dans mon cas.
  
@@ -34,7 +53,7 @@ Donc nous avons :
 
 - app/(shop)/layout.tsx : Définit la structure de la page pour l'affichage des produits (ex. entête, sections).
 
-- (shop)/products/[category]/page.tsx : Fichiers pour gérer l'affichage des produits dans une catégorie, usage d'une route dynamique et de useParams pour récupèrer l'id de l'URL. https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes
+- (shop)/products/[category]/page.tsx : Fichiers pour gérer l'affichage des produits dans une catégorie, usage d'une route dynamique et de useParams pour récupèrer l'id de l'URL. [Dynamic Routes Doc](https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes)
 
 - app/admin : route vers les pages admin
 admin/[tab] : Fichier dynamique pour basculer entre différents onglets (produits et catégories) pour l'administration.
@@ -203,16 +222,17 @@ Le projet utilise Tailwind CSS pour gérer la mise en page et le style de maniè
 
 TailwindCSS combiné à ShadcnUI permet une vitesse de développement élevée, j'ai importé de nombreux composants que j'ai modifiée (par exemple la variante default du composant Button) pour répondre à mes besoins.
 
-La page d'accueil du projet à était maquetté sur Figma. https://www.figma.com/design/ywlQziaWYgRggcvcd6Ta4y/TestTechniqueEcommerce?node-id=0-1&t=ixKOB000dAY1JfSW-1
+La page d'accueil du projet à était maquetté sur Figma. [Maquette Figma](https://www.figma.com/design/ywlQziaWYgRggcvcd6Ta4y/TestTechniqueEcommerce?node-id=0-1&t=ixKOB000dAY1JfSW-1)
 
-Concepts : https://www.visily.ai/blog/ux-design-principles/
+Concepts : [Concept UX](https://www.visily.ai/blog/ux-design-principles/)
 
 ### 1. Retour visuel immédiat (Feedback)
+
+https://github.com/user-attachments/assets/75f02d71-5e19-44aa-9398-7ffca84813b1
 
 Il est essentiel de penser en "User-Centered Experience", c'est à dire se mettre à la place de l'utilisateur.
 L’utilisateur doit toujours savoir ce qui se passe : si une action a été prise en compte, si une opération est en cours, ou s’il y a une erreur.
 
-https://github.com/user-attachments/assets/75f02d71-5e19-44aa-9398-7ffca84813b1
 
 Par exemple, 
  
@@ -248,6 +268,9 @@ Expérience utilisateur améliorée : En montrant des Skeletons au lieu d’un �
 
 Ce principe est également respectée avec le composant ShadcnUI Toast utilisé dans les formulaires CRUD, en effet lorsqu'un utilisateur soumet son formulaire il sera notifié de la bonne ou mauvaisse soumission des données.
 
+  https://github.com/user-attachments/assets/cef85d90-d058-4b24-909e-30703cdea31e
+
+
 Par exemple,
 
 ```tsx
@@ -269,6 +292,8 @@ const handleSubmit = async () => {
   }
 };
 ```
+
+
 
 ## 2. Consistance (Consistency)
 
