@@ -314,6 +314,12 @@ Peu importe où l’utilisateur rencontre ces composants (un bouton ou un menu d
 
 Ce concept est en lien avec la clarté visuelle. Les espaces et alignements influant également sur la hiérarchie visuelle.
 
+## 3. Accessibilité
+
+Le site est entièrement responsive (admin et shop) notamment grâce aux breakpoints que fournit TailwindCSS
+
+https://github.com/user-attachments/assets/a1a48828-7f4d-4273-8090-260fe40e6569
+
 # Perspectives d'évolution
 
 ## Optimisation des appels API avec un système de cache :
