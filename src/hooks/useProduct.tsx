@@ -1,33 +1,56 @@
-// src/hooks/useProducts.tsx
 import { useState, useEffect } from 'react';
-import { getProducts, createProduct, updateProduct, deleteProduct } from '../service/api';
+import { createProduct, deleteProduct, getCategory, getProduct, getProducts, updateProduct } from '../service/api';
 import { Product } from '@/types/Product';
 
-export const useProducts = () => {
+export const useProducts = (selectedCategoryId?: string) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [selectedCategoryId]);
 
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const response = await getProducts();
-      setProducts(response.data['hydra:member']);
+      let productsData: Product[] = [];
+
+      if (selectedCategoryId) {
+        // récupère les détails de la catégorie
+        const categoryResponse = await getCategory(selectedCategoryId);
+        const categoryData = categoryResponse.data;
+
+        // extraire les URLs des produits
+        const productUrls: string[] = categoryData.products;
+
+        // récupère les détails de chaque produit
+        const productPromises = productUrls.map(async (productUrl) => {
+          const productId = productUrl.split('/').pop();
+          const productResponse = await getProduct(productId?.toString() || '');
+          return productResponse.data;
+        });
+
+        productsData = await Promise.all(productPromises);
+      } else {
+        // récupère tous les produits
+        const response = await getProducts();
+        productsData = response.data['hydra:member'];
+      }
+
+      setProducts(productsData);
     } catch (error) {
       if (error instanceof Error) {
-        setError(error); 
+        setError(error);
       } else {
-        setError(new Error("Unknown error occurred"));
+        setError(new Error("Une erreur inconnue s'est produite"));
       }
     } finally {
       setLoading(false);
     }
   };
-  
+
+
   const addProduct = async (data: any) => {
     setLoading(true);
     try {

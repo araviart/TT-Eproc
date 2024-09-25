@@ -1,5 +1,5 @@
 import { menu } from "framer-motion/client";
-import { LucideProps, Search, UserRound, ShoppingCart, Menu, X, LogOut, Settings, Pencil, ChartBarStacked, ShoppingBasket  } from "lucide-react";
+import { LucideProps, Search, UserRound, ShoppingCart, Menu, X, LogOut, Settings, Pencil, ChartBarStacked, ShoppingBasket, Twitter, Instagram,    } from "lucide-react";
 
 export const Icons = {
   logo: (props: LucideProps ) => (
@@ -299,4 +299,6 @@ z"/>
 	pencil: Pencil,
 	chartBarStacked: ChartBarStacked,
 	shoppingBasket: ShoppingBasket,
+	twitter: Twitter,
+	insta: Instagram,
 }

@@ -22,7 +22,7 @@ import {
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
-import { MultiSelect } from "@/components/multi-select"; // Importation du composant MultiSelect
+import { MultiSelect } from "@/components/ui/multi-select"; 
 import { useState, useEffect } from "react";
 
 

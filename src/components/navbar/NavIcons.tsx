@@ -1,7 +1,7 @@
 "use client";
 
-import { Icons } from "./Icons";
-import AnimatedItem from "./AnimatedItem";
+import { Icons } from "../Icons";
+import AnimatedItem from "../AnimatedItem";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,9 +9,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import { LogOut, Settings, Pencil, LineChart } from "lucide-react";
+} from "../ui/dropdown-menu";
+import { LogOut, Settings, Pencil } from "lucide-react";
 import Link from "next/link";
+import Cart from "../Cart";
 
 const NavIcons = () => {
   return (
@@ -26,19 +27,22 @@ const NavIcons = () => {
           <DropdownMenuLabel>Mon compte</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
-            <Pencil className="h-4 w-4 mr-2" /><Link href="#">Profil</Link>
+            <Pencil className="h-4 w-4 mr-2" />
+            <Link href="#">Profil</Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Settings className="h-4 w-4 mr-2" /><Link href="/admin/produits">Administrer</Link>
+            <Settings className="h-4 w-4 mr-2" />
+            <Link href="/admin/produits">Administrer</Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
-            <LogOut className="h-4 w-4 mr-2" /><Link href="#">Déconnexion</Link>
+            <LogOut className="h-4 w-4 mr-2" />
+            <Link href="#">Déconnexion</Link>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
       <AnimatedItem isOpen={false}>
-        <Icons.shoppingCart className="h-6 w-6 cursor-pointer" />
+        <Cart />
       </AnimatedItem>
     </div>
   );

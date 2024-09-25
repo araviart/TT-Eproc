@@ -1,5 +1,5 @@
 import React from 'react';
-import { Skeleton } from './ui/skeleton';
+import { Skeleton } from '../ui/skeleton';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { getNumberColumns } from '@/lib/utils';
 

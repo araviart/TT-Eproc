@@ -4,10 +4,11 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { MoreHorizontal } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
-import { ProductForm } from './forms/productForm';
-import { CategoryForm } from './forms/categoryForm';
+import { ProductForm } from '../forms/productForm';
+import { CategoryForm } from '../forms/categoryForm';
 import { Product } from '@/types/Product';
 import { Category } from '@/types/Category';
+import { useToast } from "@/hooks/use-toast"
 
 const getNumberColumns = (index: number) => {
   if (index > 2) return 'hidden lg:table-cell';
@@ -31,6 +32,7 @@ const AdminTable: React.FC<AdminTableProps> = ({ items, columns, editItem, remov
   const [currentItem, setCurrentItem] = useState<any>(null);
   const [isProductFormOpen, setIsProductFormOpen] = useState(false);
   const [isCategoryFormOpen, setIsCategoryFormOpen] = useState(false);
+  const { toast } = useToast();
 
   const handleEditClick = (item: any) => {
     setCurrentItem(item); // sélectionne l'élément à modif
@@ -42,23 +44,58 @@ const AdminTable: React.FC<AdminTableProps> = ({ items, columns, editItem, remov
   };
 
   const handleDelete = (id: string) => {
-    setSelectedItemId(id); // définit l'élément sélectionné pour suppression
+    setSelectedItemId(id); 
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (selectedItemId) {
-      removeItem(selectedItemId); // supprime l'élément
-      setSelectedItemId(null); // reset l'état
+      try {
+        await removeItem(selectedItemId); 
+        setSelectedItemId(null); 
+  
+        toast({
+          title: "Suppression réussie",
+          description: `L'élément a été supprimé avec succès.`,
+          variant: "default", 
+        });
+      } catch (error) {
+        toast({
+          title: "Erreur",
+          description: "Une erreur est survenue lors de la suppression de l'élément.",
+          variant: "destructive", 
+        });
+      }
     }
   };
-
+  
   const handleFormSubmit = async (data: any) => {
-    if (currentItem) {
-      onEditClick({ ...data, id: currentItem.id });  // modifie l'élément avec l'id
-    } else {
-      onAddClick(data);  // ajoute un nouvel élément
+    try {
+      if (currentItem) {
+        await onEditClick({ ...data, id: currentItem.id });
+  
+        toast({
+          title: "Modification réussie",
+          description: `L'élément a été modifié avec succès.`,
+          variant: "default", 
+        });
+      } else {
+        await onAddClick(data);
+  
+        toast({
+          title: "Ajout réussi",
+          description: `L'élément a été ajouté avec succès.`,
+          variant: "default", // 
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Erreur",
+        description: `Une erreur est survenue lors de ${currentItem ? "la modification" : "l'ajout"} de l'élément.`,
+        variant: "destructive", 
+      });
     }
-    setIsProductFormOpen(false);  // ferme le formulaire
+  
+    setIsProductFormOpen(false);
     setIsCategoryFormOpen(false);
   };
 
