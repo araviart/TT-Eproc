@@ -1,16 +1,10 @@
 import { useState } from "react"; // Importer useState
 import Link from "next/link";
 import {
-  Home,
-  LineChart,
   ListFilter,
-  Package,
-  Package2,
   PanelLeft,
   PlusCircle,
   Search,
-  ShoppingCart,
-  Users2,
 } from "lucide-react";
 import {
   Breadcrumb,

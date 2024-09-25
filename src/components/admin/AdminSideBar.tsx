@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Package2, ShoppingCart, Package, Users2, Settings } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
 import { AdminCardProps } from "@/types/AdminCardProps";
 import { Icons } from "@/components/Icons";

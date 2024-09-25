@@ -1,6 +1,5 @@
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/navbar/Navbar";
-import localFont from "next/font/local";
 import '../globals.css';
 import { nuckleRegular } from "@/lib/fonts";
 import { Toaster } from "@/components/ui/toaster";

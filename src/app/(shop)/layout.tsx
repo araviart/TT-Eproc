@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "../globals.css";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/navbar/Navbar";
 import { Footer } from "@/components/Footer";
 import { nuckleRegular, nuckleMedium } from "../../lib/fonts";
-import { Icons } from "@/components/Icons";
 
 
 export const metadata: Metadata = {
