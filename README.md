@@ -155,6 +155,8 @@ const ProductList = () => {
 
 # 3. Gestion des formulaires
 
+https://github.com/user-attachments/assets/f3418042-66b5-471a-b615-353c1675b392
+
 ## React Hook Form
 
 Le projet utilise la librairie React Hook Form pour la gestion des formulaires. Les formulaires sont contrôlés via le hook useForm, qui est configuré avec un resolver pour la validation via Zod. Grâce à useForm, les champs du formulaire sont liés à des objets de validation (productSchema), ce qui permet de déclencher la validation lors des interactions utilisateur.
