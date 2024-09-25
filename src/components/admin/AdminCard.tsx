@@ -9,7 +9,7 @@ import {
 import AdminTable from "./AdminTable";
 import { AdminCardProps } from "@/types/AdminCardProps";
 import TablePlaceholder from "./TablePlaceHolder";
-import { Skeleton } from "./ui/skeleton";
+import { Skeleton } from "../ui/skeleton";
 
 const AdminCard: React.FC<AdminCardProps> = ({
   selectedTab,

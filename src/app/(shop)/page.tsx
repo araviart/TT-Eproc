@@ -1,6 +1,6 @@
 "use client";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import ProductList from "@/components/ProductList";
+import ProductList from "@/components/products/ProductList";
 
 export default function Home() {
   return <MaxWidthWrapper>

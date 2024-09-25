@@ -1,6 +1,6 @@
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { PRODUCT_CATEGORIES } from "@/app/config";
-import AnimatedItem from "./AnimatedItem";
+import AnimatedItem from "../AnimatedItem";
 import Link from "next/link";
 
 type Category = (typeof PRODUCT_CATEGORIES)[number];

@@ -1,7 +1,7 @@
 // products/[category]/page.tsx
 "use client";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import ProductList from "@/components/ProductList";
+import ProductList from "@/components/products/ProductList";
 import { useParams } from 'next/navigation';
 import { PRODUCT_CATEGORIES } from '@/app/config';
 

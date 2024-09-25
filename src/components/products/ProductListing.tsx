@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Product } from "@/types/Product";
 import { cn } from "@/lib/utils";
-import ProductPlaceholder from "@/components/ProductPlaceHolder";
+import ProductPlaceholder from "@/components/products/ProductPlaceHolder";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { formatPrice } from "@/lib/utils";
@@ -34,7 +34,6 @@ const ProductListing = ({ product, index }: ProductListingProps) => {
     >
       <div className="flex flex-col w-full">
         <div className="relative w-full h-[185px] md:w-[204px] md:h-[233px] lg:w-[258px] lg:h-[298px] mt-4 overflow-hidden rounded-xl">
-          {/* Utilisation de motion.img pour l'animation de zoom au hover */}
           <motion.img
             src={product.image}
             alt={product.name}

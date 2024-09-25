@@ -24,6 +24,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { AdminCardProps } from "@/types/AdminCardProps";
+import { useToast } from "@/hooks/use-toast"; 
+
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -31,23 +33,24 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import { ProductForm, ProductFormValues } from "./forms/productForm";
-import { CategoryForm, CategoryFormValues } from "./forms/categoryForm";
+} from "../ui/dropdown-menu";
+import { ProductForm, ProductFormValues } from "../forms/productForm";
+import { CategoryForm, CategoryFormValues } from "../forms/categoryForm";
 import { Product } from "@/types/Product";
 import { Category } from "@/types/Category";
 import { Icons } from "@/components/Icons";
 
 const AdminHeader: React.FC<
-  Pick<AdminCardProps, "selectedTab"> & {
-    onAddClick: (data: Product | Category) => void;
-  }
+Pick<AdminCardProps, "selectedTab"> & {
+  onAddClick: (data: Product | Category) => void;
+}
 > = ({ selectedTab, onAddClick }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false); // État pour contrôler l'ouverture du formulaire
   const [currentItem, setCurrentItem] = useState<Product | Category | null>(
     null
   ); 
-
+  
+  const { toast } = useToast();
   const handleAddClick = () => {
     setCurrentItem(null);
     setIsDialogOpen(true); 
@@ -57,15 +60,45 @@ const AdminHeader: React.FC<
     setIsDialogOpen(false);
   }
 
-  const handleCategoryFormSubmit = (data: CategoryFormValues) => {
-    onAddClick(data);
-    setIsDialogOpen(false);
+  const handleProductFormSubmit = async (data: ProductFormValues) => {
+    try {
+      await onAddClick(data);  // Attendre que l'ajout soit terminé
+
+      // Afficher un toast de succès après l'ajout du produit
+      toast({
+        title: "Succès",
+        description: `Le produit "${data.name}" a été ajouté avec succès.`,
+        variant: "default",  
+      });
+
+      setIsDialogOpen(false);  
+    } catch (error) {
+      toast({
+        title: "Erreur",
+        description: `Une erreur est survenue lors de l'ajout du produit.`,
+        variant: "destructive",  
+      });
+    }
   };
-  
-  // Pour ProductForm
-  const handleProductFormSubmit = (data: ProductFormValues) => {
-    onAddClick(data);
-    setIsDialogOpen(false);
+
+  const handleCategoryFormSubmit = async (data: CategoryFormValues) => {
+    try {
+      await onAddClick(data);
+
+      toast({
+        title: "Succès",
+        description: `La catégorie "${data.name}" a été ajoutée avec succès.`,
+        variant: "default",
+      });
+
+      setIsDialogOpen(false);
+    } catch (error) {
+      toast({
+        title: "Erreur",
+        description: `Une erreur est survenue lors de l'ajout de la catégorie.`,
+        variant: "destructive",
+      });
+    }
   };
 
   return (

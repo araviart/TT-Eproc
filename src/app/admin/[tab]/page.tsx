@@ -5,9 +5,9 @@ import { useProducts } from '@/hooks/useProduct';
 import { useCategories } from '@/hooks/useCategory';
 import { Product } from '@/types/Product';
 import { Category } from '@/types/Category';
-import AdminSideBar from '@/components/AdminSideBar';
-import AdminHeader from '@/components/AdminHeader';
-import AdminCard from '@/components/AdminCard';
+import AdminSideBar from '@/components/admin/AdminSideBar';
+import AdminHeader from '@/components/admin/AdminHeader';
+import AdminCard from '@/components/admin/AdminCard';
 import { useParams } from 'next/navigation';
 
 const AdminTabPage = () => {

@@ -1,7 +1,7 @@
 "use client";
 
-import { Icons } from "./Icons";
-import AnimatedItem from "./AnimatedItem";
+import { Icons } from "../Icons";
+import AnimatedItem from "../AnimatedItem";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,10 +9,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "../ui/dropdown-menu";
 import { LogOut, Settings, Pencil } from "lucide-react";
 import Link from "next/link";
-import Cart from "./Cart";
+import Cart from "../Cart";
 
 const NavIcons = () => {
   return (
