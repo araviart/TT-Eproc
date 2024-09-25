@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import ProductPlaceholder from "@/components/ProductPlaceHolder";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { formatPrice } from "@/lib/utils";
 
 interface ProductListingProps {
   product: Product | null;
@@ -32,18 +33,18 @@ const ProductListing = ({ product, index }: ProductListingProps) => {
       href={`/product/${product.id}`}
     >
       <div className="flex flex-col w-full">
-        <div className="relative w-full h-[185px] md:w-[232px] md:h-[266px] lg:w-[258px] lg:h-[298px] mt-4 overflow-hidden rounded-xl">
+        <div className="relative w-full h-[185px] md:w-[204px] md:h-[233px] lg:w-[258px] lg:h-[298px] mt-4 overflow-hidden rounded-xl">
           {/* Utilisation de motion.img pour l'animation de zoom au hover */}
           <motion.img
             src={product.image}
             alt={product.name}
             className="w-full h-full object-cover"
             whileHover={{
-              scale: 1.2, // Zoom interne à 120% au survol
+              scale: 1.2, // zoom interne à 120% au survol
             }}
             transition={{
-              duration: 0.4, // Durée de l'animation
-              ease: [0, 0.45, 0.19, 0.95], // Courbe de Bézier personnalisée (douce et agréable)
+              duration: 0.4, // durée de l'animation
+              ease: [0, 0.45, 0.19, 0.95], // courbe de Bézier personnalisée (douce et agréable)
             }}
           />
         </div>
@@ -52,7 +53,8 @@ const ProductListing = ({ product, index }: ProductListingProps) => {
             {product.name}
           </h3>
           <h3 className="font-medium text-sm text-gray-700 rounded-2xl">
-            {product.price} €
+          <p>{formatPrice(product.price, { currency: "EUR" })}</p>
+  
           </h3>
         </div>
       </div>
