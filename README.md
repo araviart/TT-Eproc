@@ -155,7 +155,7 @@ const ProductList = () => {
 
 # 3. Gestion des formulaires
 
-https://github.com/user-attachments/assets/0ecf2533-02af-4f40-9356-601a42704c0c
+https://github.com/user-attachments/assets/272568ed-04c6-4d09-b02f-c5a1aaf096ba
 
 ## React Hook Form
 
