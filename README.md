@@ -155,7 +155,7 @@ const ProductList = () => {
 
 # 3. Gestion des formulaires
 
-https://github.com/user-attachments/assets/f3418042-66b5-471a-b615-353c1675b392
+https://github.com/user-attachments/assets/0ecf2533-02af-4f40-9356-601a42704c0c
 
 ## React Hook Form
 
@@ -278,8 +278,7 @@ Expérience utilisateur améliorée : En montrant des Skeletons au lieu d’un �
 
 Ce principe est également respectée avec le composant ShadcnUI Toast utilisé dans les formulaires CRUD, en effet lorsqu'un utilisateur soumet son formulaire il sera notifié de la bonne ou mauvaisse soumission des données.
 
-  https://github.com/user-attachments/assets/cef85d90-d058-4b24-909e-30703cdea31e
-
+https://github.com/user-attachments/assets/77e0cfd7-ea0a-40e7-b48b-b563496acd3e
 
 Par exemple,
 
