@@ -45,7 +45,7 @@ Ce projet utilise NextJS + Typescript et TailwindCSS (ShadcnUI) et utilise une A
 
 Le projet Next.js est organisé autour de routes groupées (shop) pour le côté boutique et (admin) pour le panneau d'administration ou se situe les fonctionnalitées CRUD. Cette organisation permet de ne pas impacter l'URL pour la partie boutique et de définir des layouts racine différents. Par exemple, nous ne souhaitons pas de footer lorsque nous naviguons sur le côté admin du site. [Route Groups Doc](https://nextjs.org/docs/app/building-your-application/routing/route-groups#creating-multiple-root-layouts)
 
-Définir un layout racine et ne pas utiliser le groupage de roroutes ot m'aurait dirigé vers des layouts imbriqués peu-pratique dans mon cas.
+Définir un layout racine et ne pas utiliser le groupage de routes m'aurait dirigé vers des layouts imbriqués peu-pratique dans mon cas.
  
 Donc nous avons : 
 
